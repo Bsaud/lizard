@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Audio Player</title>
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #f0f0f0;
+            font-family: Arial, sans-serif;
+        }
+        
+        .play-button {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #1e90ff, #0066cc);
+            cursor: pointer;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            transition: transform 0.2s, box-shadow 0.2s;
+            border: none;
+            outline: none;
+            position: relative;
+        }
+        
+        .play-button:hover {
+            transform: scale(1.05);
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
+            background: linear-gradient(135deg, #1e90ff, #005bb5);
+        }
+        
+        .play-button:active {
+            transform: scale(0.98);
+        }
+        
+        /* Play icon triangle */
+        .play-button::after {
+            content: "";
+            position: absolute;
+            left: 55%;
+            top: 50%;
+            transform: translate(-50%, -50%);
+            width: 0;
+            height: 0;
+            border-top: 20px solid transparent;
+            border-left: 30px solid white;
+            border-bottom: 20px solid transparent;
+        }
+        
+        /* Change to pause icon when playing */
+        .play-button.playing::after {
+            content: "";
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%, -50%);
+            width: 8px;
+            height: 40px;
+            background: white;
+            box-shadow: 20px 0 0 white;
+            border: none;
+        }
+    </style>
+</head>
+<body>
+    <button class="play-button" id="playButton"></button>
+
+    <audio id="audioPlayer" src="audio.mp3"></audio>
+
+    <script>
+        const playButton = document.getElementById('playButton');
+        const audioPlayer = document.getElementById('audioPlayer');
+        
+        playButton.addEventListener('click', function() {
+            if (audioPlayer.paused) {
+                audioPlayer.play();
+                playButton.classList.add('playing');
+            } else {
+                audioPlayer.pause();
+                playButton.classList.remove('playing');
+            }
+        });
+        
+        // Reset button when audio ends
+        audioPlayer.addEventListener('ended', function() {
+            playButton.classList.remove('playing');
+        });
+    </script>
+</body>
+</html>
